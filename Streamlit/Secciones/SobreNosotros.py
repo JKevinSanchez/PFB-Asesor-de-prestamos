@@ -27,15 +27,15 @@ def SobreNosotros():
             margin: 10px;
         }
         .profile-image {
-            width: 255px;  /* Tamaño más grande */
-            height: auto; /* Manteniendo proporción */
+            width: 255px;
+            height: auto;
             border-radius: 5px;
-            margin-bottom: 10px; /* Espacio entre la imagen y los botones */
+            margin-bottom: 10px;
         }
         .profile-name {
             font-weight: bold;
             color: violet;
-            margin-bottom: 10px; /* Espacio entre el nombre y la imagen */
+            margin-bottom: 10px;
         }
         .button-container {
             display: flex;
@@ -50,7 +50,7 @@ def SobreNosotros():
         margin-bottom: 20px;
         }
         .button {
-            margin: 0 5px; /* Espacio entre botones */
+            margin: 0 5px;
             padding: 10px 15px;
             background-color: violet;
             color: white;
@@ -77,7 +77,8 @@ def SobreNosotros():
 
     st.markdown("<img src='https://i.ibb.co/7NM1Ln7/9150117.jpg' class='line-image'/>", unsafe_allow_html=True)
 
-    # Crear un layout 2x2
+    col0, col1, col2, col00 = st.columns((1, 1, 1, 1))
+    
     col0, col1, col2, col00 = st.columns((1, 1, 1, 1))
     
     with col1:
@@ -87,13 +88,13 @@ def SobreNosotros():
             </p>
             """, unsafe_allow_html=True)
 
-        Cesar = Image.open("Data/Imagenes/Cesar.jpg")
+        Cesar = Image.open("Data/Imagenes/Cesar.png")
         Cesar = Cesar.convert("RGB")
-        Cesar = Cesar.resize((400, 500))
+        Cesar = Cesar.resize((300, 300))
         st.image(Cesar)
 
-        col0, col3, col4 = st.columns((0.35, 1, 1))
-        col3.link_button("Linkedin", "www.linkedin.com/in/césar-rabadán-cuevas-8b838a196")
+        col3, col4 = st.columns(( 1, 1))
+        col3.link_button("Linkedin", "www.linkedin.com/in/cesarrabadancuevas")
         col4.link_button("GitHub", "https://github.com/CesarRabadan")
 
     with col1:
@@ -103,12 +104,12 @@ def SobreNosotros():
             </p>
             """, unsafe_allow_html=True)
 
-        Amanda = Image.open("Data/Imagenes/Amanda.jpg")
+        Amanda = Image.open("Data/Imagenes/Amanda.png")
         Amanda = Amanda.convert("RGB")
-        Amanda = Amanda.resize((400, 500))
+        Amanda = Amanda.resize((300, 300))
         st.image(Amanda)
 
-        col0, col3, col4 = st.columns((0.35, 1, 1))
+        col3, col4 = st.columns(( 1, 1))
         col3.link_button("Linkedin", "https://www.linkedin.com/in/amandaherranzperlova/")
         col4.link_button("GitHub", "https://github.com/amyperlova")
 
@@ -119,13 +120,13 @@ def SobreNosotros():
             </p>
             """, unsafe_allow_html=True)
 
-        Paula = Image.open("Data/Imagenes/Paula.jpg")
+        Paula = Image.open("Data/Imagenes/Paula.png")
         Paula = Paula.convert("RGB")
-        Paula = Paula.resize((400, 500))
+        Paula = Paula.resize((300, 300))
         st.image(Paula)
 
-        col0, col3, col4 = st.columns((0.35, 1, 1))
-        col3.link_button("Linkedin", "https://www.linkedin.com/in/paula-lobato-02aab11a2/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app")
+        col3, col4 = st.columns(( 1, 1))
+        col3.link_button("Linkedin", "https://www.linkedin.com/in/paulalobatoblanco")
         col4.link_button("GitHub", "https://github.com/Paaulalobato")
 
     with col2:
@@ -135,12 +136,12 @@ def SobreNosotros():
             </p>
             """, unsafe_allow_html=True)
 
-        Kevin = Image.open("Data/Imagenes/Kevin.jpg")
+        Kevin = Image.open("Data/Imagenes/Kevin.png")
         Kevin = Kevin.convert("RGB")
-        Kevin = Kevin.resize((400, 500))
+        Kevin = Kevin.resize((300, 300))
         st.image(Kevin)
 
-        col0, col3, col4 = st.columns((0.35, 1, 1))
+        col3, col4 = st.columns(( 1, 1))
         col3.link_button("Linkedin", "https://www.linkedin.com/in/jacqueskevin/")
         col4.link_button("GitHub", "https://github.com/JKevinSanchez")
 
