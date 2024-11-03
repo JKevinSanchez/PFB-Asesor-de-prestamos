@@ -1,0 +1,13 @@
+streamlit
+streamlit-option-menu
+streamlit-folium
+pandas
+numpy
+scikit-learn
+matplotlib
+plotly
+seaborn
+random
+python-dotenv
+joblib
+Pillow

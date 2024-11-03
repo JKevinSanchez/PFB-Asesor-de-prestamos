@@ -1,0 +1,74 @@
+##########################################################################################################
+# Librerias
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+#########################################################################################################
+
+df = pd.read_csv("Data/df_renombrado_limpio.csv")
+
+#########################################################################################################
+
+def Desc_Analisis():
+    st.markdown("<div class='tab-content'>Análisis de Datos.</div>", unsafe_allow_html=True)
+    st.markdown("<hr class='divider'>", unsafe_allow_html=True)
+    
+    st.markdown("""
+    <p class="big-font">
+    Esta <strong style='color: violet; font-weight: bold;'>sección</strong> contiene información sobre datos de préstamos, incluyendo detalles como el <strong style='color: violet; font-weight: bold;'>monto del préstamo</strong>, la <strong style='color: violet; font-weight: bold;'>duración</strong> y la <strong style='color: violet; font-weight: bold;'>tasa de interés</strong> entre otras.
+    </p>
+    <p class="big-font">
+    Aquí encontrás una <strong style='color: violet; font-weight: bold;'>forma rápida</strong> de revisar y entender cada <strong style='color: violet; font-weight: bold;'>variable</strong> utilizada para <strong style='color: violet; font-weight: bold;'>nuestro estudio</strong>, ya que son las utilizadas para las las <strong style='color: violet; font-weight: bold;'>visualizaciones</strong> que verás más adelante.
+    </p>
+    <p class="big-font">
+    Las <strong style='color: violet; font-weight: bold;'>variables</strong> que verás a continuación son cruciales para entender cómo se <strong style='color: violet; font-weight: bold;'>distribuyen</strong> y <strong style='color: violet; font-weight: bold;'>manejan</strong> los préstamos, así como para <strong style='color: violet; font-weight: bold;'>evaluar el riesgo</strong>  asociado a cada uno. Además, te permitirá <strong style='color: violet; font-weight: bold;'>ampliar tu visión</strong> sobre ellos, ya que tienes a disposición la <strong style='color: violet; font-weight: bold;'>información necesaria</strong> para comprender <strong style='color: violet; font-weight: bold;'>qué</strong> se tiene en cuenta en este contexto.
+    </p>
+    """, unsafe_allow_html=True)
+
+def Datos_Analisis():
+    st.markdown("<hr class='divider'>", unsafe_allow_html=True)
+    st.markdown("<h2 style='color: violet; font-weight: bold; font-size: 2rem; text-align: center'>Análisis de las Variables de nuestro Estudio</h2>", unsafe_allow_html=True)
+    st.markdown("<hr class='divider'>", unsafe_allow_html=True)
+    
+    columnas = df.columns.tolist()
+    columnas.remove("ID")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("<h4 style='color: violet; font-weight: bold;'>Selecciona la Variable que quieras analizar:</h4>", unsafe_allow_html=True)
+        columna_seleccionada = st.selectbox(" ", columnas)
+
+    with col2:
+        if columna_seleccionada:
+            st.markdown(f"<h3 style='color: violet;'>{columna_seleccionada}</h3>", unsafe_allow_html=True)
+            descripcion = {
+                "Monto del Préstamo": "El monto del préstamo se refiere a la <strong style='color: violet; font-weight: bold;'>cantidad total de dinero que se presta</strong> al prestatario. Es un factor clave en la evaluación de riesgos, ya que <strong style='color: violet; font-weight: bold;'>montos más altos</strong> pueden implicar mayores probabilidades de <strong style='color: violet; font-weight: bold;'>incumplimiento</strong>",
+                "Monto Financiado": "El monto financiado es la cantidad que <strong style='color: violet; font-weight: bold;'>realmente se entrega</strong> al prestatario, descontando posibles tarifas o costes iniciales. Este valor es importante para <strong style='color: violet; font-weight: bold;'>calcular los intereses</strong> y el <strong style='color: violet; font-weight: bold;'>coste total</strong> del préstamo",
+                "Duración del Préstamo": "La <strong style='color: violet; font-weight: bold;'>duración del préstamo</strong> indica el <strong style='color: violet; font-weight: bold;'>tiempo</strong> durante el cual el prestatario debe <strong style='color: violet; font-weight: bold;'>reembolsar el monto</strong>. Duraciones más largas pueden significar <strong style='color: violet; font-weight: bold;'>pagos mensuales más bajos</strong>, pero también un <strong style='color: violet; font-weight: bold;'>coste total de interés</strong> más elevado",
+                "Tasa de Interés": "La <strong style='color: violet; font-weight: bold;'>tasa de interés</strong> es el <strong style='color: violet; font-weight: bold;'>coste</strong> del dinero prestado, expresado como un porcentaje. Una tasa de interés alta puede <strong style='color: violet; font-weight: bold;'>aumentar el coste</strong> total del préstamo, afectando la <strong style='color: violet; font-weight: bold;'>capacidad de pago</strong> del prestatario",
+                "Pago Mensual": "El <strong style='color: violet; font-weight: bold;'>pago mensual</strong> es la cantidad que el prestatario debe <strong style='color: violet; font-weight: bold;'>abonar</strong> cada mes. Este valor está directamente relacionado con el <strong style='color: violet; font-weight: bold;'>monto del préstamo</strong>, la tasa de interés y la duración del mismo",
+                "Calificación del Préstamo": "La <strong style='color: violet; font-weight: bold;'>calificación del préstamo</strong> indica el <strong style='color: violet; font-weight: bold;'>riesgo asociado</strong> con el prestatario. Calificaciones más altas suelen reflejar un <strong style='color: violet; font-weight: bold;'>menor riesgo</strong> de incumplimiento",
+                "Años en el Empleo": "Este dato indica la <strong style='color: violet; font-weight: bold;'>estabilidad laboral</strong> del prestatario. <strong style='color: violet; font-weight: bold;'>Más años</strong> en el empleo pueden sugerir un <strong style='color: violet; font-weight: bold;'>mayor ingreso</strong> y <strong style='color: violet; font-weight: bold;'>estabilidad financiera</strong>",
+                "Ingreso Anual": "El <strong style='color: violet; font-weight: bold;'>ingreso anual</strong> del prestatario es crucial para <strong style='color: violet; font-weight: bold;'>evaluar</strong> su <strong style='color: violet; font-weight: bold;'>capacidad de pago</strong>. Ingresos más altos generalmente significan una <strong style='color: violet; font-weight: bold;'>mayor capacidad</strong> para <strong style='color: violet; font-weight: bold;'>cumplir</strong> con los <strong style='color: violet; font-weight: bold;'>pagos</strong> del préstamo",
+                "Porcentaje de Deuda sobre Ingreso": "Este <strong style='color: violet; font-weight: bold;'>porcentaje</strong> mide la relación entre la <strong style='color: violet; font-weight: bold;'>deuda total</strong> del prestatario y su <strong style='color: violet; font-weight: bold;'>ingreso</strong>. Un porcentaje alto puede indicar un <strong style='color: violet; font-weight: bold;'>mayor riesgo</strong> de incumplimiento",
+                "Puntuación FICO Máxima": "La <strong style='color: violet; font-weight: bold;'>puntuación FICO máxima</strong> es una medida de la <strong style='color: violet; font-weight: bold;'>solvencia crediticia</strong> del prestatario. Cuanto más alta sea la puntuación, <strong style='color: violet; font-weight: bold;'>menor</strong> será el <strong style='color: violet; font-weight: bold;'>riesgo</strong> para el prestamista",
+                "Puntuación FICO Mínima": "La <strong style='color: violet; font-weight: bold;'>última puntuación FICO mínima</strong> proporciona una visión del <strong style='color: violet; font-weight: bold;'>rango de confianza</strong> en la <strong style='color: violet; font-weight: bold;'>capacidad de pago</strong> del prestatario",
+                "Porcentaje de Crédito Utilizado": "Este porcentaje indica <strong style='color: violet; font-weight: bold;'>cuánto</strong> del <strong style='color: violet; font-weight: bold;'>crédito disponible</strong> está siendo utilizado por el prestatario. Un <strong style='color: violet; font-weight: bold;'>porcentaje alto</strong> puede afectar <strong style='color: violet; font-weight: bold;'>negativamente</strong> la <strong style='color: violet; font-weight: bold;'>puntuación de crédito</strong>",
+                "Estado del Préstamo": "El <strong style='color: violet; font-weight: bold;'>estado del préstamo</strong> indica si el préstamo está <strong style='color: violet; font-weight: bold;'>activo</strong>, <strong style='color: violet; font-weight: bold;'>pagado</strong>, en <strong style='color: violet; font-weight: bold;'>mora</strong>, etc. Esta información es <strong style='color: violet; font-weight: bold;'>vital</strong> para <strong style='color: violet; font-weight: bold;'>evaluar</strong> el <strong style='color: violet; font-weight: bold;'>rendimiento</strong> del préstamo",
+                "Pago Pendiente": "El <strong style='color: violet; font-weight: bold;'>monto</strong> que aún debe el prestatario. Un <strong style='color: violet; font-weight: bold;'>pago pendiente alto</strong> puede ser una señal de <strong style='color: violet; font-weight: bold;'>alerta</strong> para los prestamistas",
+                "Total Recuperado del Préstamo": "La <strong style='color: violet; font-weight: bold;'>cantidad total recuperada del préstamo</strong> refleja cuánto del <strong style='color: violet; font-weight: bold;'>monto original</strong> se ha recuperado hasta la fecha",
+                "Total Recuperado de Intereses": "El total de <strong style='color: violet; font-weight: bold;'>intereses recuperados</strong> muestra cuánto se ha ganado en intereses hasta ahora, lo que es <strong style='color: violet; font-weight: bold;'>crucial</strong> para evaluar la <strong style='color: violet; font-weight: bold;'>rentabilidad</strong> del préstamo",
+                "Última Puntuación FICO Máxima": "La <strong style='color: violet; font-weight: bold;'>última puntuación FICO máxima</strong> muestra la puntuación de crédito más reciente del prestatario, importante para <strong style='color: violet; font-weight: bold;'>evaluar cambios</strong> en su <strong style='color: violet; font-weight: bold;'>solvencia</strong>",
+                "Última Puntuación FICO Mínima": "La <strong style='color: violet; font-weight: bold;'>última puntuación FICO mínima</strong> proporciona una visión del rango de puntuación actual del prestatario, ayudando a <strong style='color: violet; font-weight: bold;'>evaluar</strong> su <strong style='color: violet; font-weight: bold;'>capacidad de pago</strong>",
+                "Cuentas Abiertas": "Este número refleja cuántas <strong style='color: violet; font-weight: bold;'>cuentas de crédito</strong> tiene el prestatario <strong style='color: violet; font-weight: bold;'>abiertas</strong> actualmente. Un número <strong style='color: violet; font-weight: bold;'>bajo</strong> puede indicar un <strong style='color: violet; font-weight: bold;'>perfil de crédito limitado</strong>",
+                "Registros Públicos": "Los <strong style='color: violet; font-weight: bold;'>registros públicos</strong> indican la <strong style='color: violet; font-weight: bold;'>presencia</strong> de <strong style='color: violet; font-weight: bold;'>eventos negativos</strong> en el <strong style='color: violet; font-weight: bold;'>historial crediticio</strong>, como <strong style='color: violet; font-weight: bold;'>quiebras</strong> o <strong style='color: violet; font-weight: bold;'>juicios</strong>, que pueden afectar la <strong style='color: violet; font-weight: bold;'>capacidad de obtener préstamos futuros</strong>",
+                "Consultas de Crédito en 6 Meses": "Este dato muestra <strong style='color: violet; font-weight: bold;'>cuántas veces</strong> el prestatario ha <strong style='color: violet; font-weight: bold;'>solicitado información</strong> de crédito en los últimos <strong style='color: violet; font-weight: bold;'>seis meses</strong>. Esto puede afectar su <strong style='color: violet; font-weight: bold;'>puntuación crediticia</strong>",
+                "Propósito del Préstamo": "El <strong style='color: violet; font-weight: bold;'>propósito del préstamo</strong> describe la <strong style='color: violet; font-weight: bold;'>razón</strong> por la cual se <strong style='color: violet; font-weight: bold;'>solicitó</strong> el <strong style='color: violet; font-weight: bold;'>financiamiento</strong>. Esto puede influir en el <strong style='color: violet; font-weight: bold;'>riesgo</strong> asociado al préstamo",
+                "Tipo de Propiedad": "El <strong style='color: violet; font-weight: bold;'>tipo de propiedad</strong> se refiere a la situación del prestatario: si tiene hipoteca, es propietario, o está de alquiler, lo que puede impactar el <strong style='color: violet; font-weight: bold;'>valor</strong> y la <strong style='color: violet; font-weight: bold;'>seguridad</strong> del préstamo",
+                "Recuperaciones Realizadas": "Este dato indica si se han realizado <strong style='color: violet; font-weight: bold;'>recuperaciones de deudas</strong> pendientes. Esto es un <strong style='color: violet; font-weight: bold;'>indicador</strong> de la <strong style='color: violet; font-weight: bold;'>efectividad</strong> de la gestión de cobranzas",
+                "Cuentas con 90 Días de demora (Últimos 24 Meses)": "Este número muestra cuántas <strong style='color: violet; font-weight: bold;'>cuentas</strong> han tenido <strong style='color: violet; font-weight: bold;'>90 días de atraso</strong> en los últimos <strong style='color: violet; font-weight: bold;'>dos años</strong>. Esto puede ser un <strong style='color: violet; font-weight: bold;'>indicador de riesgo</strong> de incumplimiento",
+                "Retrasos en 2 Años": "Este dato refleja el <strong style='color: violet; font-weight: bold;'>número total de retrasos</strong> en pagos que el prestatario ha tenido en los últimos <strong style='color: violet; font-weight: bold;'>dos años</strong>. Esto ayuda a <strong style='color: violet; font-weight: bold;'>evaluar</strong> su <strong style='color: violet; font-weight: bold;'>comportamiento de pago</strong>"
+            }
+            
+            st.markdown(f"<p class='big-font'>{descripcion.get(columna_seleccionada, 'No hay descripción disponible para esta columna.')}</p>", unsafe_allow_html=True)
